@@ -1,10 +1,13 @@
 import './App.css'
+import { useState } from 'react';
 
 function App() {
-  let counter = 0;
+  //let counter = 0;
+  const [counter, setCounter] = useState(0);
+  const [msg, setMsg] = useState('Hi mom!');
 
   const handleBtnClick = () => {
-    counter++;
+    setCounter(counter + 1);
   }
 
   return (
@@ -14,6 +17,13 @@ function App() {
       <p>Counter: {counter}</p>
 
       <button onClick={handleBtnClick}>Click me!</button>
+
+      <hr />
+
+      <p>{msg}</p>
+
+      <button onClick={() => setMsg("Hi dad!")}>Hi dad!</button>
+      
     </>
   )
 }
