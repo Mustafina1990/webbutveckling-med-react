@@ -104,20 +104,19 @@ function App() {
 			<hr />
 
 			<h2>Posts</h2>
-			<ul>
-        {posts.length > 0 && (
-				  posts.map(post =>
-				  	<li key={post.id}>
-				  		{post.title} ({post.likes} likes)
-				  		<button className="ms-1 btn btn-sm btn-success" onClick={() => increaseLikes(post.id)}>❤️</button>
-				  		<button className="ms-1 btn btn-sm btn-danger" onClick={() => deletePost(post.id)}>💣</button>
-				  	</li>
-				  )
-        )}
-        {posts.length === 0 && (
-          <li>No posts available.</li>
-        )}
-			</ul>
+			
+      {posts.length > 0 && (
+        <ul>
+			    posts.map(post =>
+			    	<li key={post.id}>
+			    		{post.title} ({post.likes} likes)
+			    		<button className="ms-1 btn btn-sm btn-success" onClick={() => increaseLikes(post.id)}>❤️</button>
+			    		<button className="ms-1 btn btn-sm btn-danger" onClick={() => deletePost(post.id)}>💣</button>
+			    	</li>
+			  )
+        </ul>
+      )}
+			
 
 			<PostCounter count={posts.length} />
 		</div>
