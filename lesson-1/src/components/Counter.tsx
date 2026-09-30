@@ -17,11 +17,11 @@ const Counter = () => {
 	}
 
 	return (
-        <>
-		<p>Counter: {counter}</p>
+		<div className="counter">
+			<p>Counter: {counter}</p>
 
-		<button className="btn btn-primary" onClick={handleBtnClick}>Click me!</button>
-        </>
+			<button className="btn btn-primary" onClick={handleBtnClick}>Click me!</button>
+		</div>
 	)
 }
 
