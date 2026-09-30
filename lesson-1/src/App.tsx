@@ -107,13 +107,13 @@ function App() {
 			
       {posts.length > 0 && (
         <ul>
-			    posts.map(post =>
+			    {posts.map(post => (
 			    	<li key={post.id}>
 			    		{post.title} ({post.likes} likes)
 			    		<button className="ms-1 btn btn-sm btn-success" onClick={() => increaseLikes(post.id)}>❤️</button>
 			    		<button className="ms-1 btn btn-sm btn-danger" onClick={() => deletePost(post.id)}>💣</button>
 			    	</li>
-			  )
+			  ))}
         </ul>
       )}
 			
