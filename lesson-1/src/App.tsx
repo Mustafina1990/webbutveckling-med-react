@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './assets/scss/App.scss';
+import Counter from './components/Counter';
 
 interface Todo {
   id: number;
@@ -56,6 +57,8 @@ function App() {
       <ul>
         {posts.map(post => <li key={post.id}>{post.title} ({post.likes} likes)</li>)}
       </ul> */}
+
+      <Counter />
 
       <p>Salary calculation</p>
 
