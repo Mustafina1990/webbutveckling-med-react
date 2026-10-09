@@ -1,9 +1,9 @@
-const TodoCounter = () => {
 
-    const [completedTodos, setCompletedTodos] = useState<Todo[]>([])
+
+const TodoCounter = (props: { completed: number; total: number }) => {
 
     return (
-         <p>{completedTodos.length} of {todos.length} todos completed.</p>
+         <p>{props.completed} of {props.total} todos completed.</p>
     )
 }
 

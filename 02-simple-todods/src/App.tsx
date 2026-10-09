@@ -2,6 +2,7 @@ import { useState } from 'react'
 import AddTodo from './components/AddTodo'
 import { type Todo } from './types/Todo'
 import './App.css'
+import TodoCounter from './components/TodoCounter'
 
 function App() {
 
@@ -11,7 +12,7 @@ function App() {
       { id: 3, title: "Learn Redux", completed: false },
     ])
 
-    
+    const [completedTodos, setCompletedTodos] = useState<Todo[]>([])
 
     const handleAddTodo = (title: string) => {
       const newTodo: Todo = {
@@ -63,6 +64,7 @@ function App() {
       <h2>You are a productivity master! All todos completed!</h2>
     )}
 
+    <TodoCounter completed={completedTodos.length} total={todos.length} />
    
    </div>
     </>
