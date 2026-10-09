@@ -2,23 +2,19 @@ import { useState } from "react";
 import Counter from "./components/Counter";
 import PostCounter from "./components/PostCounter";
 import "./assets/scss/App.scss";
-
-interface Todo {
-	id: number;
-	title: string;
-	likes: number;
-}
+import { type Post } from "./types/Post";
+import AddPostForm from "./components/AddPostForm";
 
 function App() {
 	// let counter = 0;  // stateless
 	const [msg, setMsg] = useState("Hi mom!");
-	const [posts, setPosts] = useState<Todo[]>([
+	const [posts, setPosts] = useState<Post[]>([
 		{ id: 1, title: "React Rocks 🎸!", likes: 1337 },
 		{ id: 2, title: "JSX Rocks Even Moar 🤘🏻!", likes: 42 },
 		{ id: 3, title: "Got state? 🚓", likes: 3 },
 	]);
 	const [salary, setSalary] = useState(10);
-
+	
 	const handleChangeSalary = (amount: number) => {
 		if (salary + amount < 5) {
 			setSalary(5);
@@ -33,18 +29,16 @@ function App() {
     setPosts(prevPosts => prevPosts.map(post => post.id === postId ? { ...post, likes: post.likes + 1 } : post));
   }
 
-  const handleAddPost = () => {
-	const title = prompt("What do you want to tell the world?");
-	  if (!title) {
-	  	alert("mkai...");
-	  	return;
-	}
-	const newPost: Todo = {
+  const handleAddPost = (title: string) => {
+	
+	const newPost: Post = {
 		id: Math.max(0, ...posts.map(post => post.id)) + 1,
 		title,
 		likes: 0,
 	}
+
 	setPosts((prevPosts) => [...prevPosts, newPost]);
+	
 	}
 
   const deletePost = (postId: number) => {
@@ -119,10 +113,8 @@ function App() {
 
 			<h2>Posts</h2>
 
-			<button
-				className="btn btn-primary mb-3"
-				onClick={handleAddPost}
-			>Add post</button>
+			<AddPostForm onAddPost={handleAddPost} />
+	
 			
       {posts.length > 0 && (
         <ul>
