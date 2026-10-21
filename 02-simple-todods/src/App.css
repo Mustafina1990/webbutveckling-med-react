@@ -1,56 +1,13 @@
+@import "bootstrap/scss/bootstrap";
 
-.app-title {
+.center-xy {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+
+#clock {
+  @extend .display-1;
+  font-family: 'Courier New', Courier, monospace;
   text-align: center;
-  color: #4caf50;
-  font-size: 2rem;
-  margin-bottom: 20px;
-}
-
-.todo-input-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.todo-input {
-  padding: 10px;
-  width: 300px;
-  border: 1px solid #c1efba;
-  border-radius: 4px;
-  margin-right: 10px;
-}
-
-.add-button {
-  color: #fff;
-  background-color: #4caf50;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-}
-.todo-item, .todo-completed-item {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  border: 1px solid #c1efba;
-  color: #c7e58e;
-  padding: 10px;
-}
-
-.todo-item-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.toggle-button {
-  color: #fff;
-  background-color: #4caf50;
-}
-
-.delete-button {
-  color: #fff;
-  background-color: #f44336;
-}
-
-.todo-completed-item {
-  text-decoration: line-through;
 }
