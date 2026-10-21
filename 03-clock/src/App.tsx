@@ -1,28 +1,18 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import Container from './components/Container'
+import Clock from './components/Clock'
 
 function App() {
-  const [time, setTime] = useState("00:00:00");
-
-  useEffect(() => {
-    console.log("useEffect called");
-
-     setInterval(() => {
-    const now = new Date().toLocaleTimeString();
-    console.log("Tick..", now);
-    setTime(now);
-  }, 1000);
-  }, [time]);
+  const [showClock, setShowClock] = useState(false);
 
  
 
   return (
     <>
       <Container className="center-xy">
-        <div id="clock">
-          {time}
-        </div>
+        <button onClick={() => setShowClock(!showClock)}>Show/Hide Clock</button>
+        {showClock && <Clock />}
       </Container>
     </>
   )
