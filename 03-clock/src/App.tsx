@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import Container from './components/Container'
-import Clock from './components/Clock'
+//import Clock from './components/Clock'
+import ClassClock from './components/ClassClock'
 
 function App() {
   const [showClock, setShowClock] = useState(false);
@@ -10,10 +10,10 @@ function App() {
 
   return (
     <>
-      <Container className="center-xy">
+      <div className="center-xy">
         <button onClick={() => setShowClock(!showClock)}>Show/Hide Clock</button>
-        {showClock && <Clock />}
-      </Container>
+        {showClock && <ClassClock />}
+      </div>
     </>
   )
 }

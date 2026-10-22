@@ -9,11 +9,16 @@ const Clock = () => {
       useEffect(() => {
         console.log("useEffect called");
     
-         setInterval(() => {
+        const intervalId = setInterval(() => {
         const now = new Date().toLocaleTimeString();
         console.log("Tick..", now);
         setTime(now);
       }, 1000);
+
+      return () => {
+        console.log("Cleanup function called");
+        clearInterval(intervalId);
+      }
       }, [time]);
       
     return (
