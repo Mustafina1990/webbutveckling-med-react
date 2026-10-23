@@ -4,49 +4,42 @@ import TodoCounter from "./components/TodoCounter";
 import TodoList from "./components/TodoList";
 import type { Todo } from "./types/Todo.types";
 import "./assets/scss/App.scss";
+import { fetchTodos } from "./services/TodoAPI";
 
 function App() {
-	const [todos, setTodos] = useState<Todo[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+	const [todos, setTodos] = useState<Todo[] | null>(null);
 
-	const handleAddTodo = (title: string) => {
-		// Create a new todo and set a new list of todos containing
-		// the previous todos + new the todo
-		const newTodo: Todo = {
-			id: Math.max(0, ...todos.map(todo => todo.id)) + 1,
-			title,
-			completed: false,
-		}
-		setTodos(prevTodos => [...prevTodos, newTodo]);
+	const handleAddTodo = (_title: string) => {
+
 	}
 
-	const handleDeleteTodo = (id: number) => {
-		setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
+	const handleDeleteTodo = (_id: number) => {
+
 	}
 
-	const handleToggleTodo = (id: number) => {
-		setTodos(prevTodos => prevTodos.map(todo =>
-			(todo.id === id)
-				? { ...todo, completed: !todo.completed }
-				: todo
-			)
-		);
+	const handleToggleTodo = (_id: number) => {
+
 	}
 
   useEffect(() => {
     const getData = async () => {
-      const res = await fetch("http://localhost:3000/todos");
-      if (!res.ok) {
-        throw new Error("Failed to fetch todos");
+      try {
+        const data = await fetchTodos();
+        setTodos(data);
       }
-      const data = await res.json() as Todo[];
-      setTodos(data);
+      catch {
+        setError(new Error("Failed to fetch todos"));
+      }
+      setIsLoading(false);
     }
     getData();
-  }, []);
+  }, [isLoading]);
 
 	// Derive list of completed/incompleted todos from the `todos` state
-	const finishedTodos = todos.filter(todo => todo.completed);
-	const notFinishedTodos = todos.filter(todo => !todo.completed);
+	const finishedTodos = todos?.filter(todo => todo.completed) ?? [];
+	const notFinishedTodos = todos?.filter(todo => !todo.completed) ?? [];
 
 	return (
 		<div className="py-2">
@@ -56,7 +49,13 @@ function App() {
 				onAddTodo={handleAddTodo}
 			/>
 
-			{todos.length > 0 ? (
+      {error && (
+        <p className="text-danger">Error: {error.message}</p>
+      )}
+
+			{isLoading ? (
+				<p>Loading todos...</p>
+			) : !isLoading && todos && todos.length > 0 ? (
 				<>
 					<h2 className="h5 mb-2">💪🏻 Stuff I got to do</h2>
 					<TodoList
