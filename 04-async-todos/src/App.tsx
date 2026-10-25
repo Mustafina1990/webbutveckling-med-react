@@ -4,7 +4,7 @@ import TodoCounter from "./components/TodoCounter";
 import TodoList from "./components/TodoList";
 import type { Todo } from "./types/Todo.types";
 import "./assets/scss/App.scss";
-import { fetchTodos } from "./services/TodoAPI";
+import { fetchTodos, getTodos } from "./services/TodoAPI";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,7 +26,7 @@ function App() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const data = await fetchTodos();
+        const data = await getTodos();
         setTodos(data);
       }
       catch {
@@ -78,7 +78,7 @@ function App() {
 						total={todos.length}
 					 />
 				</>
-			) : (
+			) : !error && (
 				<p>You ain't got no todos to do, time to party!!111 Untz untz untz 🥳!</p>
 			)}
 
