@@ -4,15 +4,18 @@ import TodoCounter from "./components/TodoCounter";
 import TodoList from "./components/TodoList";
 import type { Todo } from "./types/Todo.types";
 import "./assets/scss/App.scss";
-import { fetchTodos, getTodos } from "./services/TodoAPI";
+import { createTodo, fetchTodos, getTodos } from "./services/TodoAPI";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 	const [todos, setTodos] = useState<Todo[] | null>(null);
 
-	const handleAddTodo = (_title: string) => {
-
+	const handleAddTodo = async (title: string) => {
+    await createTodo({
+      title,
+      completed: false,
+    })
 	}
 
 	const handleDeleteTodo = (_id: number) => {
