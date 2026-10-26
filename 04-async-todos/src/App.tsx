@@ -8,14 +8,23 @@ import { createTodo, fetchTodos, getTodos } from "./services/TodoAPI";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState<string | null>(null);
 	const [todos, setTodos] = useState<Todo[] | null>(null);
 
 	const handleAddTodo = async (title: string) => {
+    try {
     await createTodo({
       title,
       completed: false,
     })
+    }
+    catch (err) {
+      if(err instanceof Error) {
+        setError("Could not create todo: " + err.message);
+      } else {
+        setError("Could not create todo: " + String(err));
+      }
+    }
 	}
 
 	const handleDeleteTodo = (_id: number) => {
