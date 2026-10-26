@@ -14,11 +14,18 @@ const AddTodoForm = ({ onAddTodo }: AddTodoFormProps) => {
 
 		// 🙋 Tell parent that someone wants to create a new todo with the title
 		setIsPending(true);
-		await onAddTodo(trimmedInputTitle);
+		try {
+			await onAddTodo(trimmedInputTitle);
 
-		// Clear input field and reset pending state
-		setInputTitle("");
-		setIsPending(false);
+		    // Clear input field and reset pending state
+		    setInputTitle("");
+		}
+		catch {
+			setIsPending(false);
+		}
+		finally {
+			setIsPending(false);
+		}
 	}
 
 	return (

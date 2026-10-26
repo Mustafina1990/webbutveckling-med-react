@@ -24,6 +24,7 @@ function App() {
       } else {
         setError("Could not create todo: " + String(err));
       }
+      throw err;
     }
 	}
 
