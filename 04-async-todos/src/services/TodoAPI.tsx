@@ -4,8 +4,8 @@ import type { CreateTodoPayload, Todo } from "../types/Todo.types";
 /**
  *  get all Todods
 */
-export const getTodos = async () => {
-  const res = await axios.get<Todo[]>("http://localhost:3000/todos");
+export const getTodos = async (signal?: AbortSignal) => {
+  const res = await axios.get<Todo[]>("http://localhost:3000/todos", { signal });
   return res.data;
 }
 

@@ -1,10 +1,11 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import AddTodoForm from "./components/AddTodoForm";
 import TodoCounter from "./components/TodoCounter";
 import TodoList from "./components/TodoList";
 import type { Todo } from "./types/Todo.types";
 import "./assets/scss/App.scss";
-import { createTodo, fetchTodos, getTodos } from "./services/TodoAPI";
+import { createTodo, getTodos } from "./services/TodoAPI";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -13,10 +14,13 @@ function App() {
 
 	const handleAddTodo = async (title: string) => {
     try {
-    await createTodo({
-      title,
-      completed: false,
-    })
+
+      const newTodo = await createTodo({
+        title,
+        completed: false,
+      });
+
+      setTodos(prevTodos => [...prevTodos ?? [], newTodo]);
     }
     catch (err) {
       if(err instanceof Error) {
@@ -37,18 +41,23 @@ function App() {
 	}
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const getData = async () => {
       try {
-        const data = await getTodos();
+        const data = await getTodos(controller.signal);
         setTodos(data);
       }
-      catch {
-        setError(new Error("Failed to fetch todos"));
+      catch (err) {
+        if (axios.isCancel(err)) return;
+        setError("Failed to fetch todos");
       }
       setIsLoading(false);
     }
     getData();
-  }, [isLoading]);
+
+    return () => controller.abort();
+  }, []);
 
 	// Derive list of completed/incompleted todos from the `todos` state
 	const finishedTodos = todos?.filter(todo => todo.completed) ?? [];
@@ -63,7 +72,7 @@ function App() {
 			/>
 
       {error && (
-        <p className="text-danger">Error: {error.message}</p>
+        <p className="text-danger">Error: {error}</p>
       )}
 
 			{isLoading ? (
