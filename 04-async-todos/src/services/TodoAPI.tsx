@@ -17,6 +17,14 @@ export const createTodo = async (payload: CreateTodoPayload) => {
   return res.data;
 };
 
+/**
+ * Delete a Todo
+ */
+export const deleteTodo = async (id: number) => {
+  const res = await axios.delete(`http://localhost:3000/todos/${id}`);
+  return res.data;
+};
+
 export const fetchTodos = async () => {
   const res = await fetch("http://localhost:3000/todos");
   if (!res.ok) {

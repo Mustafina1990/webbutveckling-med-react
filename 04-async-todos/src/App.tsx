@@ -5,7 +5,7 @@ import TodoCounter from "./components/TodoCounter";
 import TodoList from "./components/TodoList";
 import type { Todo } from "./types/Todo.types";
 import "./assets/scss/App.scss";
-import { createTodo, getTodos } from "./services/TodoAPI";
+import { createTodo, deleteTodo, getTodos } from "./services/TodoAPI";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -32,7 +32,16 @@ function App() {
     }
 	}
 
-	const handleDeleteTodo = (_id: number) => {
+	const handleDeleteTodo = (id: number) => {
+    try {
+      await deleteTodo(id);
+      await getTodos();
+    } catch (err) {
+      if(err instanceof Error) {
+        setError("Could not delete todo: " + err.message);
+      } else {
+        setError("Could not delete todo: " + String(err));
+      }
 
 	}
 
