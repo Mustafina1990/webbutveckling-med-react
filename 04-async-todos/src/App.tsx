@@ -5,7 +5,7 @@ import TodoCounter from "./components/TodoCounter";
 import TodoList from "./components/TodoList";
 import type { Todo } from "./types/Todo.types";
 import "./assets/scss/App.scss";
-import { createTodo, deleteTodo, getTodos } from "./services/TodoAPI";
+import { createTodo, deleteTodo, getTodos, updateTodo } from "./services/TodoAPI";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -46,8 +46,16 @@ function App() {
 		}
 	}
 
-	const handleToggleTodo = (_id: number) => {
-
+	const handleToggleTodo = async (todo: Todo) => {
+    try {
+      await updateTodo(todo.id, { completed: !todo.completed });
+    } catch (err) {
+      if(err instanceof Error) {
+        setError("Could not update todo: " + err.message);
+      } else {
+        setError("Could not update todo: " + String(err));
+      }
+    }
 	}
 
   useEffect(() => {

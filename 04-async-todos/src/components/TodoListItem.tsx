@@ -3,7 +3,7 @@ import type { Todo } from "../types/Todo.types";
 
 interface TodoListItemProps {
 	onDelete: (id: number) => void;
-	onToggle: (id: number) => void;
+	onToggle: (todo: Todo) => void;
 	todo: Todo;
 }
 
@@ -14,7 +14,7 @@ const TodoListItem = ({ onDelete, onToggle, todo }: TodoListItemProps) => {
 
 			<div>
 				<button
-					onClick={() => onToggle(todo.id)}
+					onClick={() => onToggle(todo)}
 					className="btn btn-sm btn-outline-warning"
 				>Toggle</button>
 

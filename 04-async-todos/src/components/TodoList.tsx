@@ -3,7 +3,7 @@ import TodoListItem from "./TodoListItem";
 
 interface TodoListProps {
 	onDelete: (id: number) => void;
-	onToggle: (id: number) => void;
+	onToggle: (todo: Todo) => void;
 	todos: Todo[];
 }
 
