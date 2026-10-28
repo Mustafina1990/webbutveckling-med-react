@@ -32,17 +32,18 @@ function App() {
     }
 	}
 
-	const handleDeleteTodo = (id: number) => {
+	const handleDeleteTodo = async (id: number) => {
     try {
       await deleteTodo(id);
-      await getTodos();
+      const updatedTodos = await getTodos();
+      setTodos(updatedTodos);
     } catch (err) {
       if(err instanceof Error) {
         setError("Could not delete todo: " + err.message);
       } else {
         setError("Could not delete todo: " + String(err));
       }
-
+		}
 	}
 
 	const handleToggleTodo = (_id: number) => {
