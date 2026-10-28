@@ -35,8 +35,7 @@ function App() {
 	const handleDeleteTodo = async (id: number) => {
     try {
       await deleteTodo(id);
-      const updatedTodos = await getTodos();
-      setTodos(updatedTodos);
+      setTodos(prevTodos => prevTodos?.filter(todo => todo.id !== id) ?? null);
     } catch (err) {
       if(err instanceof Error) {
         setError("Could not delete todo: " + err.message);
@@ -49,6 +48,7 @@ function App() {
 	const handleToggleTodo = async (todo: Todo) => {
     try {
       await updateTodo(todo.id, { completed: !todo.completed });
+      setTodos(prevTodos => prevTodos?.map(t => t.id === todo.id ? { ...t, completed: !t.completed } : t) ?? null);
     } catch (err) {
       if(err instanceof Error) {
         setError("Could not update todo: " + err.message);
