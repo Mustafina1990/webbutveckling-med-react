@@ -21,7 +21,7 @@ function App() {
 			</header>
 
 			<SearchCity onSearch={handelSearch} />
-			<CurrentWeather />
+			{currentWeather && <CurrentWeather data={currentWeather} />}
 		</Container>
 	);
 }
